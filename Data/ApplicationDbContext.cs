@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using healthicly.Models;
 
 namespace healthicly.Data
 {
@@ -11,6 +12,10 @@ namespace healthicly.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
+
         }
+
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+
     }
 }

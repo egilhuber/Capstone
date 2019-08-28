@@ -16,7 +16,7 @@ namespace healthicly.Models
         [Display(Name = "Brief Description")]
         public string BriefDescription { get; set; }
         [ForeignKey("CategoryId")]
-        public int Category { get; set; }
+        public Category Category { get; set; }
 
         public bool Vegan { get; set; }
         [Display(Name = "Contains Dairy")]

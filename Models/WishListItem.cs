@@ -16,6 +16,6 @@ namespace healthicly.Models
         [Display(Name = "Reason Needed")]
         public string Reason { get; set; }
         [ForeignKey("EmployeeId")]
-        public string UserEmail { get; set; }
+        public Employee UserEmail { get; set; }
     }
 }

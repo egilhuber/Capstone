@@ -19,6 +19,6 @@ namespace healthicly.Models
         public bool Group { get; set; }
         [Display(Name = "Client")]
         [ForeignKey("ClientId")]
-        public int? ClientId { get; set; }
+        public Client Client { get; set; }
     }
 }

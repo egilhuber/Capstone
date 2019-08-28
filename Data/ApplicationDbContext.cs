@@ -16,6 +16,17 @@ namespace healthicly.Data
         }
 
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<CleaningTask> CleaningTasks { get; set; }
+        public DbSet<Client> Clients { get; set; }
+        public DbSet<Comment> Comments { get; set; }
+        public DbSet<Employee> Employees { get; set; }
+        public DbSet<InHouseActivity> InHouseActivities { get; set; }
+        public DbSet<Meal> Meals { get; set; }
+        public DbSet<Outing> Outings { get; set; }
+        public DbSet<Shift> Shifts { get; set; }
+        public DbSet<ViewingParty> ViewingParties { get; set; }
+        public DbSet<WishListItem> WishListItems { get; set; }
 
     }
 }

@@ -23,8 +23,8 @@
                 <span asp-validation-for="Meal.BriefDescription" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label class="control-label">Category</label><br />
-                @Html.DropDownListFor(m => m.Meal.Category, Model.CategoryList, "Category")<br />
+                <label asp-for="Meal.Category" class="control-label">Category</label><br />
+                @Html.DropDownListFor(m => m.Meal.Category.Id, Model.CategoryList, "Category")<br />
             </div>
             <div class="form-group">
                 <div class="checkbox">

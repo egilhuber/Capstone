@@ -11,22 +11,22 @@ using healthicly.ViewModels;
 
 namespace healthicly.Controllers
 {
-    public class MealsController : Controller
+    public class OutingsController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public MealsController(ApplicationDbContext context)
+        public OutingsController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Meals
+        // GET: Outings
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Meals.ToListAsync());
+            return View(await _context.Outings.ToListAsync());
         }
 
-        // GET: Meals/Details/5
+        // GET: Outings/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -34,42 +34,40 @@ namespace healthicly.Controllers
                 return NotFound();
             }
 
-            var meal = await _context.Meals
+            var outing = await _context.Outings
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (meal == null)
+            if (outing == null)
             {
                 return NotFound();
             }
 
-            return View(meal);
+            return View(outing);
         }
 
-        // GET: Meals/Create
+        // GET: Outings/Create
         public IActionResult Create()
         {
-            MealCreateViewModel mealCreateViewModel = new MealCreateViewModel(_context);
-            return View(mealCreateViewModel);
+            OutingClientViewModel outingClientViewModel = new OutingClientViewModel(_context);
+            return View(outingClientViewModel);
         }
 
-        // POST: Meals/Create
+        // POST: Outings/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,BriefDescription,Category,Vegan,ContainsDairy,GlutenFree,ContainsSoy,ContainsPeanuts")] Meal meal)
+        public async Task<IActionResult> Create([Bind("Id,Name,DayAndTime,Location,Group")] Outing outing)
         {
             if (ModelState.IsValid)
             {
-                int cat = meal.Category.Id;
-                meal.Category = _context.Categories.Where(c => c.Id == cat).Single();
-                _context.Add(meal);
+                _context.Add(outing);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(meal);
+            return View(outing);
         }
 
-        // GET: Meals/Edit/5
+        // GET: Outings/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -77,22 +75,22 @@ namespace healthicly.Controllers
                 return NotFound();
             }
 
-            var meal = await _context.Meals.FindAsync(id);
-            if (meal == null)
+            var outing = await _context.Outings.FindAsync(id);
+            if (outing == null)
             {
                 return NotFound();
             }
-            return View(meal);
+            return View(outing);
         }
 
-        // POST: Meals/Edit/5
+        // POST: Outings/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,BriefDescription,Vegan,ContainsDairy,GlutenFree,ContainsSoy,ContainsPeanuts")] Meal meal)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,DayAndTime,Location,Group")] Outing outing)
         {
-            if (id != meal.Id)
+            if (id != outing.Id)
             {
                 return NotFound();
             }
@@ -101,12 +99,12 @@ namespace healthicly.Controllers
             {
                 try
                 {
-                    _context.Update(meal);
+                    _context.Update(outing);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!MealExists(meal.Id))
+                    if (!OutingExists(outing.Id))
                     {
                         return NotFound();
                     }
@@ -117,10 +115,10 @@ namespace healthicly.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(meal);
+            return View(outing);
         }
 
-        // GET: Meals/Delete/5
+        // GET: Outings/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -128,31 +126,30 @@ namespace healthicly.Controllers
                 return NotFound();
             }
 
-            var meal = await _context.Meals
+            var outing = await _context.Outings
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (meal == null)
+            if (outing == null)
             {
                 return NotFound();
             }
 
-            return View(meal);
+            return View(outing);
         }
 
-        // POST: Meals/Delete/5
+        // POST: Outings/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var meal = await _context.Meals.FindAsync(id);
-            _context.Meals.Remove(meal);
+            var outing = await _context.Outings.FindAsync(id);
+            _context.Outings.Remove(outing);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool MealExists(int id)
+        private bool OutingExists(int id)
         {
-            return _context.Meals.Any(e => e.Id == id);
+            return _context.Outings.Any(e => e.Id == id);
         }
-
     }
 }

@@ -8,84 +8,66 @@ using Microsoft.EntityFrameworkCore;
 using healthicly.Data;
 using healthicly.Models;
 using healthicly.ViewModels;
-using Microsoft.AspNetCore.Authorization;
 
 namespace healthicly.Controllers
 {
-    public class EmployeesController : Controller
+    public class MealsController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public EmployeesController(ApplicationDbContext context)
+        public MealsController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Employees
+        // GET: Meals
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Employees.ToListAsync());
+            return View(await _context.Meals.ToListAsync());
         }
 
-        // GET: Employees/Details/5
+        // GET: Meals/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            var thisUserName = User.Identity.Name;
-            var thisEmployee = _context.Employees.FirstOrDefault(e => e.Email == thisUserName);
-            if (thisEmployee == null)
-            {
-                return RedirectToAction(nameof(Index), "Home");
-            }
-            id = thisEmployee.Id;
             if (id == null)
-            {
-                return RedirectToAction(nameof(Index), "Home");
-            }
-
-            var employee = await _context.Employees
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (employee == null)
             {
                 return NotFound();
             }
 
-            return View(employee);
+            var meal = await _context.Meals
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (meal == null)
+            {
+                return NotFound();
+            }
+
+            return View(meal);
         }
 
-        // GET: Employees/Create
+        // GET: Meals/Create
         public IActionResult Create()
         {
-            var currentUser = User.Identity.Name;
-            foreach (Employee e in _context.Employees)
-            {
-                if (e.Email == currentUser)
-                {
-                    return RedirectToAction(nameof(Index), "Employees");
-                }
-            }
-            EmployeeShiftViewModel employeeshiftViewModel = new EmployeeShiftViewModel(_context);
-            return View(employeeshiftViewModel);
+            MealCreateViewModel mealCreateViewModel = new MealCreateViewModel(_context);
+            return View(mealCreateViewModel);
         }
 
-        // POST: Employees/Create
+        // POST: Meals/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,Email,Position,Shift,AssignedClient,PhoneNumber")] Employee employee)
+        public async Task<IActionResult> Create([Bind("Id,Name,BriefDescription,Category,Vegan,ContainsDairy,GlutenFree,ContainsSoy,ContainsPeanuts")] Meal meal)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(employee);
+                _context.Add(meal);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            
-            return View(employee);
+            return View(meal);
         }
 
-        // GET: Employees/Edit/5
-        //[Authorize(Roles = "Admin")]
+        // GET: Meals/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -93,25 +75,22 @@ namespace healthicly.Controllers
                 return NotFound();
             }
 
-            var employee = await _context.Employees.FindAsync(id);
-            if (employee == null)
+            var meal = await _context.Meals.FindAsync(id);
+            if (meal == null)
             {
                 return NotFound();
             }
-            EmployeeShiftViewModel employeeshiftViewModel = new EmployeeShiftViewModel(_context);
-            return View(employeeshiftViewModel);
+            return View(meal);
         }
 
-        // POST: Employees/Edit/5
+        // POST: Meals/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //[Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,FirstName,LastName,Email,Position,Shift,AssignedClient,PhoneNumber")] Employee employee)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,BriefDescription,Vegan,ContainsDairy,GlutenFree,ContainsSoy,ContainsPeanuts")] Meal meal)
         {
-            
-            if (id != employee.Id)
+            if (id != meal.Id)
             {
                 return NotFound();
             }
@@ -120,12 +99,12 @@ namespace healthicly.Controllers
             {
                 try
                 {
-                    _context.Update(employee);
+                    _context.Update(meal);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!EmployeeExists(employee.Id))
+                    if (!MealExists(meal.Id))
                     {
                         return NotFound();
                     }
@@ -136,11 +115,10 @@ namespace healthicly.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(employee);
+            return View(meal);
         }
 
-        // GET: Employees/Delete/5
-        //[Authorize(Roles = "Admin")]
+        // GET: Meals/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -148,31 +126,31 @@ namespace healthicly.Controllers
                 return NotFound();
             }
 
-            var employee = await _context.Employees
+            var meal = await _context.Meals
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (employee == null)
+            if (meal == null)
             {
                 return NotFound();
             }
 
-            return View(employee);
+            return View(meal);
         }
 
-        // POST: Employees/Delete/5
-        //[Authorize(Roles = "Admin")]
+        // POST: Meals/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var employee = await _context.Employees.FindAsync(id);
-            _context.Employees.Remove(employee);
+            var meal = await _context.Meals.FindAsync(id);
+            _context.Meals.Remove(meal);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool EmployeeExists(int id)
+        private bool MealExists(int id)
         {
-            return _context.Employees.Any(e => e.Id == id);
+            return _context.Meals.Any(e => e.Id == id);
         }
+
     }
 }

@@ -17,12 +17,19 @@ namespace healthicly.ViewModels
 
         public SelectList ShiftList { get; set; }
 
+        public Client Client { get; set; }
+
+        public SelectList ClientList { get; set; }
+
         public EmployeeShiftViewModel(ApplicationDbContext context)
         {
             _context = context;
 
             List<Shift> ListOfShifts = _context.Shifts.Select(s => s).ToList();
             ShiftList = new SelectList(ListOfShifts, "Id", "Name");
+
+            List<Client> ListOfClients = _context.Clients.Select(c => c).ToList();
+            ClientList = new SelectList(ListOfClients, "Id", "PrefFirstName");
 
         }
     }

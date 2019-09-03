@@ -1,0 +1,17 @@
+INSERT INTO Clients
+VALUES ('Tony', 'S', 'tonystark@test.com', 'false'),
+       ('Steve', 'R', 'steverogers@test.com', 'false'),
+       ('Peter', 'P', 'notspiderman@test.com', 'false')
+
+INSERT INTO Shifts
+VALUES ('1'),
+       ('2'),
+       ('3'),
+       ('0')
+
+
+INSERT INTO Categories
+VALUES ('Breakfast'),
+       ('Lunch'),
+       ('Dinner'),
+       ('Snack')

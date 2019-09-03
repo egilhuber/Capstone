@@ -1,0 +1,77 @@
+﻿@model healthicly.ViewModels.MealCreateViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Create</h2>
+
+<h4>Meal</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Meal.Name" class="control-label"></label>
+                <input asp-for="Meal.Name" class="form-control" />
+                <span asp-validation-for="Meal.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Meal.BriefDescription" class="control-label"></label>
+                <input asp-for="Meal.BriefDescription" class="form-control" />
+                <span asp-validation-for="Meal.BriefDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Category</label><br />
+                @Html.DropDownListFor(m => m.Meal.Category, Model.CategoryList, "Category")<br />
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input asp-for="Meal.Vegan" /> @Html.DisplayNameFor(model => model.Meal.Vegan)
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input asp-for="Meal.ContainsDairy" /> @Html.DisplayNameFor(model => model.Meal.ContainsDairy)
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input asp-for="Meal.GlutenFree" /> @Html.DisplayNameFor(model => model.Meal.GlutenFree)
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input asp-for="Meal.ContainsSoy" /> @Html.DisplayNameFor(model => model.Meal.ContainsSoy)
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input asp-for="Meal.ContainsPeanuts" /> @Html.DisplayNameFor(model => model.Meal.ContainsPeanuts)
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

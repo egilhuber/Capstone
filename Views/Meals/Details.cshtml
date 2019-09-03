@@ -1,0 +1,61 @@
+﻿@model healthicly.Models.Meal
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Meal</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.BriefDescription)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.BriefDescription)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Vegan)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Vegan)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ContainsDairy)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ContainsDairy)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.GlutenFree)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.GlutenFree)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ContainsSoy)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ContainsSoy)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ContainsPeanuts)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ContainsPeanuts)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

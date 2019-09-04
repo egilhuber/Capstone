@@ -60,8 +60,8 @@ namespace healthicly.Controllers
         {
             if (ModelState.IsValid)
             {
-                int cat = meal.Category.Id;
-                meal.Category = _context.Categories.Where(c => c.Id == cat).Single();
+                int category = meal.Category.Id;
+                meal.Category = _context.Categories.Where(c => c.Id == category).Single();
                 _context.Add(meal);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

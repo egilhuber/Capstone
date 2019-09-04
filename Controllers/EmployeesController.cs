@@ -76,6 +76,10 @@ namespace healthicly.Controllers
         {
             if (ModelState.IsValid)
             {
+                int shift = employee.Shift.Id;
+                employee.Shift = _context.Shifts.Where(s => s.Id == shift).Single();
+                int client = employee.AssignedClient.Id;
+                employee.AssignedClient = _context.Clients.Where(c => c.Id == client).Single();
                 _context.Add(employee);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

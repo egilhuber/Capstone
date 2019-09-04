@@ -56,10 +56,12 @@ namespace healthicly.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,DayAndTime,Location,Group")] Outing outing)
+        public async Task<IActionResult> Create([Bind("Id,Name,DayAndTime,Location,Group,Client")] Outing outing)
         {
             if (ModelState.IsValid)
             {
+                int clientId = outing.Client.Id;
+                outing.Client = _context.Clients.Where(c => c.Id == clientId).Single();
                 _context.Add(outing);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

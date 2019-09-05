@@ -90,7 +90,7 @@ namespace healthicly.Controllers
 
         // GET: Employees/Edit/5
         //[Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int? id)//this id is the one that is clicked on 
         {
             if (id == null)
             {
@@ -102,8 +102,8 @@ namespace healthicly.Controllers
             {
                 return NotFound();
             }
-            EmployeeShiftViewModel employeeshiftViewModel = new EmployeeShiftViewModel(_context);
-            return View(employeeshiftViewModel);
+            //EmployeeShiftViewModel employeeshiftViewModel = new EmployeeShiftViewModel(_context);
+            return View(employee);
         }
 
         // POST: Employees/Edit/5
@@ -112,7 +112,7 @@ namespace healthicly.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         //[Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,FirstName,LastName,Email,Position,Shift,AssignedClient,PhoneNumber")] Employee employee)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,FirstName,LastName,Email,Position,Shift,AssignedClient,PhoneNumber")] Employee employee) //both of the things that are passed in are the employee that are being edited 
         {
             
             if (id != employee.Id)

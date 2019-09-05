@@ -22,5 +22,9 @@ namespace healthicly.Models
         [Display(Name = "Client")]
         [ForeignKey("ClientId")]
         public Client Client { get; set; }
+
+        public double Latitude { get; set; }
+
+        public double Longitude { get; set; }
     }
 }

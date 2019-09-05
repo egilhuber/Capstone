@@ -8,29 +8,25 @@ using Microsoft.EntityFrameworkCore;
 using healthicly.Data;
 using healthicly.Models;
 using healthicly.ViewModels;
-using healthicly.ApiKeys;
 
 namespace healthicly.Controllers
 {
-    public class OutingsController : Controller
+    public class CleaningTasksController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private string MapToken = ApiKey.mapsKey;
-        private readonly Object thisLock = new object();
-        public string Token => MapToken;
 
-        public OutingsController(ApplicationDbContext context)
+        public CleaningTasksController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Outings
+        // GET: CleaningTasks
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Outings.ToListAsync());
+            return View(await _context.CleaningTasks.ToListAsync());
         }
 
-        // GET: Outings/Details/5
+        // GET: CleaningTasks/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -38,42 +34,42 @@ namespace healthicly.Controllers
                 return NotFound();
             }
 
-            var outing = await _context.Outings
+            var cleaningTask = await _context.CleaningTasks
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (outing == null)
+            if (cleaningTask == null)
             {
                 return NotFound();
             }
-            await GetGoogleData(outing);
-            return View(outing);
+
+            return View(cleaningTask);
         }
 
-        // GET: Outings/Create
+        // GET: CleaningTasks/Create
         public IActionResult Create()
         {
-            OutingClientViewModel outingClientViewModel = new OutingClientViewModel(_context);
-            return View(outingClientViewModel);
+            CleaningEmployeesViewModel cleaningEmployeesViewModel = new CleaningEmployeesViewModel(_context);
+            return View(cleaningEmployeesViewModel);
         }
 
-        // POST: Outings/Create
+        // POST: CleaningTasks/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,DayAndTime,Location,Group,Client")] Outing outing)
+        public async Task<IActionResult> Create([Bind("Id,Name,BriefDescription,AssignedEmployee")] CleaningTask cleaningTask)
         {
             if (ModelState.IsValid)
             {
-                int clientId = outing.Client.Id;
-                outing.Client = _context.Clients.Where(c => c.Id == clientId).Single();
-                _context.Add(outing);
+                int employee = cleaningTask.AssignedEmployee.Id;
+                cleaningTask.AssignedEmployee = _context.Employees.Where(e => e.Id == employee).Single();
+                _context.Add(cleaningTask);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(outing);
+            return View(cleaningTask);
         }
 
-        // GET: Outings/Edit/5
+        // GET: CleaningTasks/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -81,22 +77,22 @@ namespace healthicly.Controllers
                 return NotFound();
             }
 
-            var outing = await _context.Outings.FindAsync(id);
-            if (outing == null)
+            var cleaningTask = await _context.CleaningTasks.FindAsync(id);
+            if (cleaningTask == null)
             {
                 return NotFound();
             }
-            return View(outing);
+            return View(cleaningTask);
         }
 
-        // POST: Outings/Edit/5
+        // POST: CleaningTasks/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,DayAndTime,Location,Group")] Outing outing)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,BriefDescription,AssignedEmployee")] CleaningTask cleaningTask)
         {
-            if (id != outing.Id)
+            if (id != cleaningTask.Id)
             {
                 return NotFound();
             }
@@ -105,12 +101,12 @@ namespace healthicly.Controllers
             {
                 try
                 {
-                    _context.Update(outing);
+                    _context.Update(cleaningTask);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!OutingExists(outing.Id))
+                    if (!CleaningTaskExists(cleaningTask.Id))
                     {
                         return NotFound();
                     }
@@ -121,10 +117,10 @@ namespace healthicly.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(outing);
+            return View(cleaningTask);
         }
 
-        // GET: Outings/Delete/5
+        // GET: CleaningTasks/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -132,52 +128,30 @@ namespace healthicly.Controllers
                 return NotFound();
             }
 
-            var outing = await _context.Outings
+            var cleaningTask = await _context.CleaningTasks
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (outing == null)
+            if (cleaningTask == null)
             {
                 return NotFound();
             }
 
-            return View(outing);
+            return View(cleaningTask);
         }
 
-        // POST: Outings/Delete/5
+        // POST: CleaningTasks/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var outing = await _context.Outings.FindAsync(id);
-            _context.Outings.Remove(outing);
+            var cleaningTask = await _context.CleaningTasks.FindAsync(id);
+            _context.CleaningTasks.Remove(cleaningTask);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool OutingExists(int id)
+        private bool CleaningTaskExists(int id)
         {
-            return _context.Outings.Any(e => e.Id == id);
+            return _context.CleaningTasks.Any(e => e.Id == id);
         }
-
-
-
-        private Task GetGoogleData(Outing outing)
-        {
-            return Task.Run(() =>
-            {
-
-                string geoUrl = "https://maps.googleapis.com/maps/api/geocode/json?address=" + outing.Location + "&key=" + ApiKey.mapsKey;
-                var latitude = outing.Latitude;
-                var longitude = outing.Longitude;
-                string url = @"https://maps.googleapis.com/maps/api/js?key=" + ApiKey.mapsKey + "&callback=initMap";
-
-
-
-
-
-            });
-
-        }
-
-
     }
 }

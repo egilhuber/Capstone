@@ -36,7 +36,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label asp-for="Outing.Client"class="control-label">If this is not a group outing, specify the client. </label><br />
+                <label asp-for="Outing.Client"class="control-label">If this is a group outing, select 'None'.</label><br />
                 @Html.DropDownListFor(m => m.Outing.Client.Id, Model.ClientList, "Client")<br />
             </div>
             <div class="form-group">

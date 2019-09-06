@@ -17,6 +17,7 @@ namespace healthicly.Models
         public string BriefDescription { get; set; }
         [Display(Name = "Assigned Employee")]
         [ForeignKey("EmployeeId")]
+        public int EmployeeId { get; set; }
         public Employee AssignedEmployee { get; set; }
     }
 }

@@ -15,10 +15,13 @@ namespace healthicly.Models
         public string Name { get; set; }
         [Display(Name = "Day and Time")]
         public DateTime DayAndTime { get; set; }
+        [Display(Name = "Brief description of activity")]
+        public string BriefDescription { get; set; }
 
-        public bool Group { get; set; }
-        [Display(Name = "Client")]
-        [ForeignKey("ClientId")]
-        public Client Client { get; set; }
+        //public bool Group { get; set; }
+        //[Display(Name = "Client")]
+        //[ForeignKey("ClientId")]
+        //public int ClientId { get; set; }
+        //public Client Client { get; set; }
     }
 }

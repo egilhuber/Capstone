@@ -24,6 +24,46 @@ namespace healthicly.Controllers
             _context = context;
         }
 
+
+
+
+
+        public ActionResult AddComment(string type, int activityId, string commentData)
+        {
+            if (type.ToLower() == "outing")
+            {
+                Outing thisOuting;
+                Employee thisEmployee;
+                string thisEmail = User.Identity.Name;
+                thisEmployee = _context.Employees.Where(e => e.Email == thisEmail).Single();
+                Comment comment = new Comment();
+                lock (thisLock)
+                {
+                    thisOuting = _context.Outings.Where(o => o.Id == activityId).Single();
+                }
+                lock (thisLock)
+                {
+                    thisEmployee = _context.Employees.Where(e => e.Id == thisEmployee.Id).Single();
+                }
+                comment.Outing = thisOuting;
+                comment.Employee = thisEmployee;
+                comment.EmployeeId = thisEmployee.Id;
+                comment.UserComment = commentData;
+                comment.CommentDate = DateTime.Now;
+                lock (thisLock)
+                {
+                    _context.Comments.Add(comment);
+                    _context.SaveChanges();
+                }
+                return RedirectToAction("Details", "Outings", new { id = activityId });
+            }
+            return View();
+        }
+
+
+
+
+
         // GET: Outings
         public async Task<IActionResult> Index()
         {
@@ -38,13 +78,14 @@ namespace healthicly.Controllers
                 return NotFound();
             }
 
-            var outing = await _context.Outings
-                .FirstOrDefaultAsync(m => m.Id == id);
+            //var outing = await _context.Outings.Include(s => s.Client).FirstOrDefaultAsync(m => m.Id == id);
+            var outing = await _context.Outings.FirstOrDefaultAsync(m => m.Id == id);
+            var comments = await _context.Comments.Include(s=>s.Employee).Where(c => c.Outing.Id == outing.Id).ToListAsync();
             if (outing == null)
             {
                 return NotFound();
             }
-            await GetGoogleData(outing);
+            ViewData.Add("Comments", comments);
             return View(outing);
         }
 
@@ -64,8 +105,8 @@ namespace healthicly.Controllers
         {
             if (ModelState.IsValid)
             {
-                int clientId = outing.Client.Id;
-                outing.Client = _context.Clients.Where(c => c.Id == clientId).Single();
+                //int clientId = outing.Client.Id;
+                //outing.Client = _context.Clients.Where(c => c.Id == clientId).Single();
                 _context.Add(outing);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -160,23 +201,6 @@ namespace healthicly.Controllers
 
 
 
-        private Task GetGoogleData(Outing outing)
-        {
-            return Task.Run(() =>
-            {
-
-                string geoUrl = "https://maps.googleapis.com/maps/api/geocode/json?address=" + outing.Location + "&key=" + ApiKey.mapsKey;
-                var latitude = outing.Latitude;
-                var longitude = outing.Longitude;
-                string url = @"https://maps.googleapis.com/maps/api/js?key=" + ApiKey.mapsKey + "&callback=initMap";
-
-
-
-
-
-            });
-
-        }
 
 
     }

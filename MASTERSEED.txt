@@ -17,6 +17,16 @@ VALUES ('Breakfast'),
        ('Snack')
 
 INSERT INTO Outings
-VALUES ('Chicago Trip', '09/09/2019 4:00:00 PM', 'Chicago', 'False', '4', '41.5234', '-87.3714'),
-	   ('Minnesota Trip', '09/09/2019 4:00:00 PM', 'Minneapolis', 'False', '4', '44.9778', '-93.265'),
-	   ('Seattle Trip', '09/09/2019 4:00:00 PM', 'Seattle', 'False', '4', '47.6062', '-122.33')
+VALUES ('Chicago Trip', '09/09/2019 4:00:00 PM', 'Chicago'),
+	   ('Minnesota Trip', '09/09/2019 4:00:00 PM', 'Minneapolis'),
+	   ('Seattle Trip', '09/09/2019 4:00:00 PM', 'Seattle')
+
+INSERT INTO InHouseActivities
+VALUES ('Painting', '09/09/2019 4:00:00 PM', 'Canvas and acrylic paints'),
+	   ('Game night', '09/09/2019 4:00:00 PM', 'Monopoly, Uno, and checkers'),
+	   ('Cookout', '09/09/2019 4:00:00 PM', 'Build your own burger')
+
+INSERT INTO ViewingParties
+VALUES ('Iron Man', '09/09/2019 4:00:00 PM'),
+	   ('Mean Girls', '09/09/2019 4:00:00 PM'),
+	   ('The Simpsons', '09/09/2019 4:00:00 PM')

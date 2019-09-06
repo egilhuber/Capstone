@@ -7,26 +7,26 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using healthicly.Data;
 using healthicly.Models;
-using healthicly.ViewModels;
 
 namespace healthicly.Controllers
 {
-    public class MealsController : Controller
+    public class WishListItemsController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public MealsController(ApplicationDbContext context)
+        public WishListItemsController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Meals
+        // GET: WishListItems
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Meals.Include(s => s.Category).ToListAsync());
+            var applicationDbContext = _context.WishListItems.Include(w => w.UserEmail);
+            return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: Meals/Details/5
+        // GET: WishListItems/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -34,43 +34,42 @@ namespace healthicly.Controllers
                 return NotFound();
             }
 
-            var meal = await _context.Meals
+            var wishListItem = await _context.WishListItems
+                .Include(w => w.UserEmail)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            meal.Category = await _context.Categories.Where(m => m.Id == meal.CategoryId).SingleOrDefaultAsync();
-            if (meal == null)
+            if (wishListItem == null)
             {
                 return NotFound();
             }
 
-            return View(meal);
+            return View(wishListItem);
         }
 
-        // GET: Meals/Create
+        // GET: WishListItems/Create
         public IActionResult Create()
         {
-            MealCreateViewModel mealCreateViewModel = new MealCreateViewModel(_context);
-            return View(mealCreateViewModel);
+            ViewData["EmployeeId"] = new SelectList(_context.Employees, "Id", "Id");
+            return View();
         }
 
-        // POST: Meals/Create
+        // POST: WishListItems/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,BriefDescription,Category,Vegan,ContainsDairy,GlutenFree,ContainsSoy,ContainsPeanuts")] Meal meal)
+        public async Task<IActionResult> Create([Bind("Id,Name,Reason,EmployeeId")] WishListItem wishListItem)
         {
             if (ModelState.IsValid)
             {
-                int category = meal.Category.Id;
-                meal.Category = _context.Categories.Where(c => c.Id == category).Single();
-                _context.Add(meal);
+                _context.Add(wishListItem);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(meal);
+            ViewData["EmployeeId"] = new SelectList(_context.Employees, "Id", "Id", wishListItem.EmployeeId);
+            return View(wishListItem);
         }
 
-        // GET: Meals/Edit/5
+        // GET: WishListItems/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -78,22 +77,23 @@ namespace healthicly.Controllers
                 return NotFound();
             }
 
-            var meal = await _context.Meals.FindAsync(id);
-            if (meal == null)
+            var wishListItem = await _context.WishListItems.FindAsync(id);
+            if (wishListItem == null)
             {
                 return NotFound();
             }
-            return View(meal);
+            ViewData["EmployeeId"] = new SelectList(_context.Employees, "Id", "Id", wishListItem.EmployeeId);
+            return View(wishListItem);
         }
 
-        // POST: Meals/Edit/5
+        // POST: WishListItems/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,BriefDescription,Vegan,ContainsDairy,GlutenFree,ContainsSoy,ContainsPeanuts")] Meal meal)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Reason,EmployeeId")] WishListItem wishListItem)
         {
-            if (id != meal.Id)
+            if (id != wishListItem.Id)
             {
                 return NotFound();
             }
@@ -102,12 +102,12 @@ namespace healthicly.Controllers
             {
                 try
                 {
-                    _context.Update(meal);
+                    _context.Update(wishListItem);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!MealExists(meal.Id))
+                    if (!WishListItemExists(wishListItem.Id))
                     {
                         return NotFound();
                     }
@@ -118,10 +118,11 @@ namespace healthicly.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(meal);
+            ViewData["EmployeeId"] = new SelectList(_context.Employees, "Id", "Id", wishListItem.EmployeeId);
+            return View(wishListItem);
         }
 
-        // GET: Meals/Delete/5
+        // GET: WishListItems/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -129,31 +130,31 @@ namespace healthicly.Controllers
                 return NotFound();
             }
 
-            var meal = await _context.Meals
+            var wishListItem = await _context.WishListItems
+                .Include(w => w.UserEmail)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (meal == null)
+            if (wishListItem == null)
             {
                 return NotFound();
             }
 
-            return View(meal);
+            return View(wishListItem);
         }
 
-        // POST: Meals/Delete/5
+        // POST: WishListItems/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var meal = await _context.Meals.FindAsync(id);
-            _context.Meals.Remove(meal);
+            var wishListItem = await _context.WishListItems.FindAsync(id);
+            _context.WishListItems.Remove(wishListItem);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool MealExists(int id)
+        private bool WishListItemExists(int id)
         {
-            return _context.Meals.Any(e => e.Id == id);
+            return _context.WishListItems.Any(e => e.Id == id);
         }
-
     }
 }

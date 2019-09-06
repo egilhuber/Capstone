@@ -23,7 +23,7 @@ namespace healthicly.Controllers
         // GET: CleaningTasks
         public async Task<IActionResult> Index()
         {
-            return View(await _context.CleaningTasks.ToListAsync());
+            return View(await _context.CleaningTasks.Include(s => s.AssignedEmployee).ToListAsync());
         }
 
         // GET: CleaningTasks/Details/5
@@ -34,8 +34,8 @@ namespace healthicly.Controllers
                 return NotFound();
             }
 
-            var cleaningTask = await _context.CleaningTasks
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var cleaningTask = await _context.CleaningTasks.FirstOrDefaultAsync(m => m.Id == id);
+            cleaningTask.AssignedEmployee = await _context.Employees.Where(e => e.Id == cleaningTask.EmployeeId).SingleOrDefaultAsync();
             if (cleaningTask == null)
             {
                 return NotFound();

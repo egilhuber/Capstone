@@ -53,10 +53,10 @@
                 @Html.DisplayFor(modelItem => item.Position)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.AssignedClient)
+                @Html.DisplayFor(modelItem => item.AssignedClient.PrefFirstName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Shift)
+                @Html.DisplayFor(modelItem => item.Shift.Name)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.PhoneNumber)

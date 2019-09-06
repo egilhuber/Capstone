@@ -1,4 +1,4 @@
-﻿@model healthicly.Models.Outing
+﻿@model healthicly.Models.WishListItem
 
 @{
     ViewData["Title"] = "Edit";
@@ -7,7 +7,7 @@
 
 <h2>Edit</h2>
 
-<h4>Outing</h4>
+<h4>WishListItem</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -20,22 +20,15 @@
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="DayAndTime" class="control-label"></label>
-                <input asp-for="DayAndTime" class="form-control" />
-                <span asp-validation-for="DayAndTime" class="text-danger"></span>
+                <label asp-for="Reason" class="control-label"></label>
+                <input asp-for="Reason" class="form-control" />
+                <span asp-validation-for="Reason" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Location" class="control-label"></label>
-                <input asp-for="Location" class="form-control" />
-                <span asp-validation-for="Location" class="text-danger"></span>
+                <label asp-for="EmployeeId" class="control-label"></label>
+                <select asp-for="EmployeeId" class="form-control" asp-items="ViewBag.EmployeeId"></select>
+                <span asp-validation-for="EmployeeId" class="text-danger"></span>
             </div>
-            @*<div class="form-group">
-                <div class="checkbox">
-                    <label>
-                        <input asp-for="Group" /> @Html.DisplayNameFor(model => model.Group)
-                    </label>
-                </div>
-            </div>*@
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-default" />
             </div>

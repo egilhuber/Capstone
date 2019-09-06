@@ -24,7 +24,7 @@ namespace healthicly.Controllers
         // GET: Employees
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Employees.ToListAsync());
+            return View(await _context.Employees.Include(s => s.AssignedClient).Include(s => s.Shift).ToListAsync());
         }
 
         // GET: Employees/Details/5
@@ -44,6 +44,8 @@ namespace healthicly.Controllers
 
             var employee = await _context.Employees
                 .FirstOrDefaultAsync(m => m.Id == id);
+            employee.AssignedClient = await _context.Clients.Where(e => e.Id == employee.ClientId).SingleOrDefaultAsync();
+            employee.Shift = await _context.Shifts.Where(e => e.Id == employee.ShiftId).SingleOrDefaultAsync();
             if (employee == null)
             {
                 return NotFound();

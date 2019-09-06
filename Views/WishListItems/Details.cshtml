@@ -1,4 +1,4 @@
-﻿@model healthicly.Models.CleaningTask
+﻿@model healthicly.Models.WishListItem
 
 @{
     ViewData["Title"] = "Details";
@@ -8,7 +8,7 @@
 <h2>Details</h2>
 
 <div>
-    <h4>CleaningTask</h4>
+    <h4>WishListItem</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -18,16 +18,16 @@
             @Html.DisplayFor(model => model.Name)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.BriefDescription)
+            @Html.DisplayNameFor(model => model.Reason)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.BriefDescription)
+            @Html.DisplayFor(model => model.Reason)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.AssignedEmployee)
+            @Html.DisplayNameFor(model => model.UserEmail)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.AssignedEmployee.FirstName)
+            @Html.DisplayFor(model => model.UserEmail.FirstName)
         </dd>
     </dl>
 </div>

@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    List<Comment> comments = (List<Comment>)ViewData["Comments"];
 }
 
 <h2>Details</h2>
@@ -30,12 +31,12 @@
         <dd id="location">
             @Html.DisplayFor(model => model.Location)
         </dd>
-        <dt>
+        @*<dt>
             @Html.DisplayNameFor(model => model.Group)
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Group)
-        </dd>
+        </dd>*@
     </dl>
 </div>
 
@@ -62,7 +63,33 @@
     <br /><br />
 </div>
 
+ <br />
+                <h3>
+                    <strong> Comments</strong><br />
+                </h3>
 
+                <div class="div-right">
+                    @foreach (Comment c in comments)
+                    {
+                        
+                        string text = c.UserComment;
+                        string user = c.Employee.FirstName + " " + c.Employee.LastName;
+                        <h5>@(user)</h5>
+                        <p>@(text)</p>
+                        <br /><br />
+                    }
+                </div>
+                <div class="div-right">
+                    <strong>Leave a note for other employees below.</strong>
+                    <br />
+                    <!-- string type, int id, string commentData -->
+                    <form method="post" action="/Outings/AddComment">
+                        <input value="outing" name="type" hidden />
+                        <input value="@Model.Id" name="activityId" hidden />
+                        <input type="text" onfocus="this.value=''" value="Insert comment here" name="commentData" style="border:1px solid; width:60%; padding:8px; border-color:blue;"><br />
+                        <button type="submit" class="btn btn-primary">Post</button><br />
+                    </form>
+                </div>
 
 <div>
     <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |

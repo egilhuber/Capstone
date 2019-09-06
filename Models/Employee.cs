@@ -21,9 +21,11 @@ namespace healthicly.Models
         public string Position { get; set; }
         [Display(Name = "Shift")]
         [ForeignKey("ShiftId")]
+        public int ShiftId { get; set; }
         public Shift Shift { get; set; }
         [Display(Name = "Assigned Client")]
         [ForeignKey("ClientId")]
+        public int ClientId { get; set; }
         public Client AssignedClient { get; set; }
         [Display(Name = "Phone Number")]
         public string PhoneNumber { get; set; }

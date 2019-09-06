@@ -26,6 +26,7 @@ namespace healthicly.Models
         [Display(Name = "Assigned Client")]
         [ForeignKey("ClientId")]
         public int ClientId { get; set; }
+        [Display(Name = "Assigned Client")]
         public Client AssignedClient { get; set; }
         [Display(Name = "Phone Number")]
         public string PhoneNumber { get; set; }

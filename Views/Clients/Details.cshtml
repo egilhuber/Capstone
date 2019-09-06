@@ -1,0 +1,43 @@
+﻿@model healthicly.Models.Client
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Client</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.PrefFirstName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PrefFirstName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.LastInitial)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.LastInitial)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CaresComplete)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CaresComplete)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

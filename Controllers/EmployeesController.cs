@@ -29,9 +29,16 @@ namespace healthicly.Controllers
         // GET: Employees/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            var thisUserName = User.Identity.Name;
+            var thisEmployee = _context.Employees.FirstOrDefault(e => e.Email == thisUserName);
+            if (thisEmployee == null)
+            {
+                return RedirectToAction(nameof(Index), "Home");
+            }
+            id = thisEmployee.Id;
             if (id == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Index), "Home");
             }
 
             var employee = await _context.Employees

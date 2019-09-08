@@ -1,5 +1,13 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿//let myLabels = document.querySelectorAll('.lbl-toggle');
 
-// Write your JavaScript code.
+//Array.from(myLabels).forEach(label => {
+//    label.addEventListener('keydown', e => {
+//        // 32 === spacebar
+//        // 13 === enter
+//        if (e.which === 32 || e.which === 13) {
+//            e.preventDefault();
+//            label.click();
+//        };
+//    });
+//});
 

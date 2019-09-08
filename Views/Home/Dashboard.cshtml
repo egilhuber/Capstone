@@ -1,0 +1,18 @@
+﻿@*<partial name="~/Shared/_OutingPartial"/>
+    <partial name="~/Shared/_InHouseActivityPartial"/>*@
+
+
+@model healthicly.ViewModels.DashboardViewModel
+
+
+
+    <div class="row">
+        <div class="col-md-3">
+            @Html.Partial("_OutingPartial")
+
+        </div>
+        <div class="col-md-3">
+            @Html.Partial("_InHouseActivityPartial")
+        </div>
+
+    </div>

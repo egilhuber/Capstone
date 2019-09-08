@@ -1,5 +1,6 @@
 ﻿@{
     Layout = "_DashboardLayout";
+    List<string> cleaningTasks = (List<string>)ViewData["CleaningTask"];
 }
 <div class="wrap-collabsible">
     <input id="cleaningTask" class="toggle" type="checkbox">
@@ -7,14 +8,14 @@
     <div class="collapsible-content">
         <div class="content-inner">
             @* ------------------------------------------- *@
-
-
-
-            <p>hello cleaning</p>
-
-
-
-
+                       
+            @foreach (string c in cleaningTasks)
+            {
+                string text = c;
+                <p>@(text)</p>
+                <br />
+            }
+            <a asp-area="" asp-controller="CleaningTasks" asp-Action="Index">View Details</a>
 
             @* ------------------------------------------- *@
         </div>

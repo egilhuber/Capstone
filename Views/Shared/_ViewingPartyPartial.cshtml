@@ -1,5 +1,6 @@
 ﻿@{
     Layout = "_DashboardLayout";
+    List<string> viewingParties = (List<string>)ViewData["ViewingParty"];
 }
 <div class="wrap-collabsible">
     <input id="viewingParty" class="toggle" type="checkbox">
@@ -7,15 +8,13 @@
     <div class="collapsible-content">
         <div class="content-inner">
             @* ------------------------------------------- *@
-
-
-
-            <p>hello tv</p>
-
-
-
-
-
+            @foreach  (string c in viewingParties)
+            {
+                string text = c;
+                <p>@(text)</p>
+                <br />
+            }
+            <a asp-area="" asp-controller="ViewingParties" asp-action="Index">View Details</a>
             @* ------------------------------------------- *@
         </div>
     </div>

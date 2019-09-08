@@ -1,5 +1,6 @@
 ﻿@{
     Layout = "_DashboardLayout";
+    List<string> employees = (List<string>)ViewData["Employee"];
 }
 <div class="wrap-collabsible">
     <input id="employee" class="toggle" type="checkbox">
@@ -7,15 +8,13 @@
     <div class="collapsible-content">
         <div class="content-inner">
             @* ------------------------------------------- *@
-
-
-
-            <p>hello employees</p>
-
-
-
-
-
+            @foreach (string c in employees)
+            {
+                string text = c;
+                <p>@(text)</p>
+                <br/>
+            }
+            <a asp-area="" asp-controller="Employees" asp-action="Index">View All</a>
             @* ------------------------------------------- *@
         </div>
     </div>

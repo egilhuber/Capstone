@@ -48,9 +48,29 @@ namespace healthicly.Controllers
 
         public IActionResult Dashboard()
         {
-            List<Outing> outingList = _context.Outings.Select(c => c).ToList();
+            DateTime today = DateTime.Today;
+            var thisUserName = User.Identity.Name;
+            var thisEmployee = _context.Employees.FirstOrDefault(e => e.Email == thisUserName);
+
+            List<string> inHouseActivityNames = _context.InHouseActivities.Select(c => c.Name).ToList();
+            ViewData["InHouseActivity"] = inHouseActivityNames;
+
+            List<string> cleaningTaskNames = _context.CleaningTasks.Select(c => c.Name).ToList();
+            ViewData["CleaningTask"] = cleaningTaskNames;
+
+            List<string> clientNames = _context.Clients.Select(c => c.PrefFirstName).ToList();
+            ViewData["Client"] = clientNames;
+
+            List<string> employeeNames = _context.Employees.Select(c => c.FirstName).ToList();
+            ViewData["Employee"] = employeeNames;
+
+            List<string> viewingPartyNames = _context.ViewingParties.Select(c => c.ContentTitle).ToList();
+            ViewData["ViewingParty"] = viewingPartyNames;
+
             List<string> outingNames = _context.Outings.Select(c => c.Name).ToList();
             ViewData["Outing"] = outingNames;
+
+
             return View();
             
         }

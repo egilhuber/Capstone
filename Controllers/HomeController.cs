@@ -48,7 +48,9 @@ namespace healthicly.Controllers
 
         public IActionResult Dashboard()
         {
-            //return OnGetPartial();
+            List<Outing> outingList = _context.Outings.Select(c => c).ToList();
+            List<string> outingNames = _context.Outings.Select(c => c.Name).ToList();
+            ViewData["Outing"] = outingNames;
             return View();
             
         }

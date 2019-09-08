@@ -1,18 +1,39 @@
-﻿@*<partial name="~/Shared/_OutingPartial"/>
-    <partial name="~/Shared/_InHouseActivityPartial"/>*@
+﻿@{ 
+    ViewBag.Title = "Dashboard";
+
+}
 
 
-@model healthicly.ViewModels.DashboardViewModel
-
-
-
+    <div class="row" >
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            @Html.Partial("_ClientPartial")
+        </div>
+    </div>
+    <div height="10px"></div>
     <div class="row">
+        <div class="col-md-3"></div>
         <div class="col-md-3">
             @Html.Partial("_OutingPartial")
-
         </div>
         <div class="col-md-3">
             @Html.Partial("_InHouseActivityPartial")
         </div>
-
+    </div>
+    <div height="10px"></div>
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-3">
+            @Html.Partial("_ViewingPartyPartial")
+        </div>
+        <div class="col-md-3">
+            @Html.Partial("_EmployeePartial")
+        </div>
+    </div>
+    <div height="5px"></div>
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            @Html.Partial("_CleaningTaskPartial")
+        </div>
     </div>

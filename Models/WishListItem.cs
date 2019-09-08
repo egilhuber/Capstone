@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace healthicly.Models
 {
-    public class WishListItem
+    public class WishListItem 
     {
         [Key] 
         public int Id { get; set; }

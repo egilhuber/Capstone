@@ -1,22 +1,25 @@
-﻿@{ 
+﻿
+@{
     Layout = "_DashboardLayout";
+    List<string>outings = (List<string>)ViewData["Outing"];
 }
-    <div class="wrap-collabsible">
-        <input id="outing" class="toggle" type="checkbox">
-        <label for="outing" class="lbl-toggle" tabindex="0">Outings</label>
-        <div class="collapsible-content">
-            <div class="content-inner">
-                @* ------------------------------------------- *@
+<div class="wrap-collabsible">
+    <input id="outing" class="toggle" type="checkbox">
+    <label for="outing" class="lbl-toggle" tabindex="0">Outings</label>
+    <div class="collapsible-content">
+        <div class="content-inner">
+            @* ------------------------------------------- *@
 
 
+            @foreach (string c in outings)
+            {
 
-                <p>hello outings</p>
+                string text = c;
+                <p>@(text)</p>
+                <br /><br />
+            }
 
-
-
-
-
-                @* ------------------------------------------- *@
-            </div>
+            @* ------------------------------------------- *@
         </div>
     </div>
+</div>

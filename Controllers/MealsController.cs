@@ -21,6 +21,87 @@ namespace healthicly.Controllers
             _context = context;
         }
 
+        public IActionResult Menu()
+        {
+            List<Meal> menu = GenerateMenu();
+            ViewData["Menu"] = menu;
+            return View();
+        }
+
+        public List<Meal> GenerateMenu()
+        {
+            List<Meal> allMeals = _context.Meals.Select(m => m).ToList();
+            List<Meal> allBreakfastMeals = _context.Meals.Include(m => m.Category).Where(m => m.Category.Name == "Breakfast").ToList();
+            List<Meal> allLunchMeals = _context.Meals.Include(m => m.Category).Where(m => m.Category.Name == "Lunch").ToList();
+            List<Meal> allDinnerMeals = _context.Meals.Include(m => m.Category).Where(m => m.Category.Name == "Dinner").ToList();
+            List<Meal> allSnackMeals = _context.Meals.Include(m => m.Category).Where(m => m.Category.Name == "Snack").ToList();
+
+            List<Meal> approvedBreakfastMeals = new List<Meal>();
+            List<Meal> approvedLunchMeals = new List<Meal>();
+            List<Meal> approvedDinnerMeals = new List<Meal>();
+            List<Meal> approvedSnackMeals = new List<Meal>();
+
+            foreach(Meal m in allBreakfastMeals)
+            {
+                if(m.IsApproved == true)
+                {
+                    approvedBreakfastMeals.Add(m);
+                }
+            }
+
+            foreach (Meal m in allLunchMeals)
+            {
+                if (m.IsApproved == true)
+                {
+                    approvedLunchMeals.Add(m);
+                }
+            }
+
+            foreach (Meal m in allDinnerMeals)
+            {
+                if (m.IsApproved == true)
+                {
+                    approvedDinnerMeals.Add(m);
+                }
+            }
+
+            foreach (Meal m in allSnackMeals)
+            {
+                if (m.IsApproved == true)
+                {
+                    approvedSnackMeals.Add(m);
+                }
+            }
+
+            int breakfastCount = approvedBreakfastMeals.Count();
+            int lunchCount = approvedLunchMeals.Count();
+            int dinnerCount = approvedDinnerMeals.Count();
+            int snackCount = approvedSnackMeals.Count();
+
+            int chosenBreakfast = RandomNumber(breakfastCount);
+            int chosenLunch = RandomNumber(lunchCount);
+            int chosenDinner = RandomNumber(dinnerCount);
+            int chosenSnack = RandomNumber(snackCount);
+
+            List<Meal> generatedMenu = new List<Meal>();
+            Meal chosenBreakfastItem = approvedBreakfastMeals[chosenBreakfast];
+            Meal chosenLunchItem = approvedLunchMeals[chosenLunch];
+            Meal chosenDinnerItem = approvedDinnerMeals[chosenDinner];
+            Meal chosenSnackItem = approvedSnackMeals[chosenSnack];
+            generatedMenu.Add(chosenBreakfastItem);
+            generatedMenu.Add(chosenLunchItem);
+            generatedMenu.Add(chosenDinnerItem);
+            generatedMenu.Add(chosenSnackItem);
+
+            return generatedMenu;
+        }
+
+        public int RandomNumber(int max)
+        {
+            Random random = new Random();
+            return random.Next(1, max);
+        }
+
         // GET: Meals
         public async Task<IActionResult> Index()
         {

@@ -23,8 +23,20 @@ namespace healthicly.Controllers
 
         public IActionResult Menu()
         {
-            List<Meal> menu = GenerateMenu();
-            ViewData["Menu"] = menu;
+            List<Meal> sunday = GenerateMenu();
+            List<Meal> monday = GenerateMenu();
+            List<Meal> tuesday = GenerateMenu();
+            List<Meal> wednesday = GenerateMenu();
+            List<Meal> thursday = GenerateMenu();
+            List<Meal> friday = GenerateMenu();
+            List<Meal> saturday = GenerateMenu();
+            ViewData["Sunday"] = sunday;
+            ViewData["Monday"] = monday;
+            ViewData["Tuesday"] = tuesday;
+            ViewData["Wednesday"] = wednesday;
+            ViewData["Thursday"] = thursday;
+            ViewData["Friday"] = friday;
+            ViewData["Saturday"] = saturday;
             return View();
         }
 

@@ -3,14 +3,18 @@
 @{
     ViewData["Title"] = "Menu";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    List<Meal> menu = (List<Meal>)ViewData["Menu"];
+    List<Meal> sunday = (List<Meal>)ViewData["Sunday"];
+    List<Meal> monday = (List<Meal>)ViewData["Monday"];
+    List<Meal> tuesday = (List<Meal>)ViewData["Tuesday"];
+    List<Meal> wednesday = (List<Meal>)ViewData["Wednesday"];
+    List<Meal> thursday = (List<Meal>)ViewData["Thursday"];
+    List<Meal> friday = (List<Meal>)ViewData["Friday"];
+    List<Meal> saturday = (List<Meal>)ViewData["Saturday"];
 }
 
 <h2>Randomly Generated Menu</h2>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+<h4>Sunday</h4>
 <table class="table">
     <thead>
         <tr>
@@ -38,48 +42,421 @@
             <th>
                 @Html.DisplayNameFor(model => model.ContainsPeanuts)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsApproved)
-            </th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in menu) {
+        @foreach (var item in sunday)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BriefDescription)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Vegan)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ContainsDairy)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.GlutenFree)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ContainsSoy)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ContainsPeanuts)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<h4>Monday</h4>
+<table class="table">
+    <thead>
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.BriefDescription)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Category.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Vegan)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ContainsDairy)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.GlutenFree)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ContainsSoy)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ContainsPeanuts)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsApproved)
-            </td>
-            @*<td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>*@
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BriefDescription)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Category)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Vegan)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContainsDairy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GlutenFree)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContainsSoy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContainsPeanuts)
+            </th>
         </tr>
-}
+    </thead>
+    <tbody>
+        @foreach (var item in monday)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BriefDescription)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Vegan)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ContainsDairy)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.GlutenFree)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ContainsSoy)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ContainsPeanuts)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<h4>Tuesday</h4>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BriefDescription)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Category)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Vegan)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContainsDairy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GlutenFree)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContainsSoy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContainsPeanuts)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in tuesday)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BriefDescription)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Vegan)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ContainsDairy)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.GlutenFree)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ContainsSoy)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ContainsPeanuts)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<h4>Wednesday</h4>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BriefDescription)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Category)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Vegan)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContainsDairy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GlutenFree)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContainsSoy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContainsPeanuts)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in wednesday)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BriefDescription)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Vegan)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ContainsDairy)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.GlutenFree)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ContainsSoy)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ContainsPeanuts)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<h4>Thursday</h4>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BriefDescription)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Category)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Vegan)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContainsDairy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GlutenFree)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContainsSoy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContainsPeanuts)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in thursday)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BriefDescription)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Vegan)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ContainsDairy)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.GlutenFree)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ContainsSoy)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ContainsPeanuts)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<h4>Friday</h4>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BriefDescription)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Category)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Vegan)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContainsDairy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GlutenFree)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContainsSoy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContainsPeanuts)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in friday)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BriefDescription)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Vegan)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ContainsDairy)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.GlutenFree)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ContainsSoy)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ContainsPeanuts)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<h4>Saturday</h4>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BriefDescription)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Category)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Vegan)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContainsDairy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GlutenFree)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContainsSoy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContainsPeanuts)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in saturday)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BriefDescription)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Vegan)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ContainsDairy)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.GlutenFree)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ContainsSoy)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ContainsPeanuts)
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

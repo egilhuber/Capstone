@@ -27,6 +27,7 @@ namespace healthicly.Data
         public DbSet<Shift> Shifts { get; set; }
         public DbSet<ViewingParty> ViewingParties { get; set; }
         public DbSet<WishListItem> WishListItems { get; set; }
+        public DbSet<Alert> Alerts { get; set; }
 
     }
 }

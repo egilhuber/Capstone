@@ -47,6 +47,7 @@ namespace healthicly.Controllers
                     thisEmployee = _context.Employees.Where(e => e.Id == thisEmployee.Id).Single();
                 }
                 comment.Outing = thisOuting;
+                comment.OutingId = thisOuting.Id;
                 comment.Employee = thisEmployee;
                 comment.EmployeeId = thisEmployee.Id;
                 comment.UserComment = commentData;

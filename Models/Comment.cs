@@ -20,13 +20,13 @@ namespace healthicly.Models
         public int EmployeeId { get; set; }
         public Employee Employee { get; set; }
         [ForeignKey("OutingId")]
-        public int OutingId { get; set; }
+        public int? OutingId { get; set; }
         public Outing Outing { get; set; }
         [ForeignKey("ViewingPartyId")]
-        public int ViewingPartyId { get; set; }
+        public int? ViewingPartyId { get; set; }
         public ViewingParty ViewingParty { get; set; }
         [ForeignKey("InHouseActivityId")]
-        public int InHouseActivityId { get; set; }
+        public int? InHouseActivityId { get; set; }
         public InHouseActivity InHouseActivity { get; set; }
          
     }

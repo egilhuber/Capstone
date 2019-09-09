@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace healthicly.Models
 {
-    public class Meal : ShoppingListItem
+    public class Meal
     {
         [Key]
         public int Id { get; set; }

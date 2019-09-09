@@ -71,6 +71,8 @@ namespace healthicly.Controllers
         {
             if (ModelState.IsValid)
             {
+                var thisUserName = User.Identity.Name;
+                employee.Email = thisUserName;
                 _context.Add(employee);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

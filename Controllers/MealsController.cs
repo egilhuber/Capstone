@@ -30,7 +30,7 @@ namespace healthicly.Controllers
         public IActionResult ApprovedMeals()
         {
             DateTime today = DateTime.Today;
-            List<Meal> approvedMeals = _context.Meals.Where(m => m.IsApproved == true).ToList();
+            List<Meal> approvedMeals = _context.Meals.Include(m => m.Category).Where(m => m.IsApproved == true).ToList();
             ViewData["ApprovedMeal"] = approvedMeals;
             return View();
         }

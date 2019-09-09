@@ -63,23 +63,53 @@ namespace healthicly.Controllers
 
             //CleaningTasks
             List<string> cleaningTaskNames = _context.CleaningTasks.Select(c => c.Name).ToList();
-            ViewData["CleaningTask"] = cleaningTaskNames;
+            List<CleaningTask> myTasks = _context.CleaningTasks.Where(c => c.EmployeeId == thisEmployee.Id).ToList();
+            List<string> myTasksNames = new List<string>();
+            foreach (CleaningTask c in myTasks)
+            {
+                myTasksNames.Add(c.Name);
+            }
+            ViewData["CleaningTask"] = myTasksNames;
 
             //Clients
             List<string> clientNames = _context.Clients.Select(c => c.PrefFirstName).ToList();
-            ViewData["Client"] = clientNames;
+            List<Client> myClients = _context.Clients.Where(c => c.Id == thisEmployee.ClientId).ToList();
+            List<string> myClientsNames = new List<string>();
+            foreach(Client c in myClients)
+            {
+                myClientsNames.Add(c.PrefFirstName);
+            }
+            ViewData["Client"] = myClientsNames;
 
             //Employees
             List<string> employeeNames = _context.Employees.Select(c => c.FirstName).ToList();
-            ViewData["Employee"] = employeeNames;
+            List<Employee> thisShiftEmployees = _context.Employees.Where(e => e.ShiftId == thisEmployee.ShiftId).ToList();
+            List<string> thisShiftEmployeeNames = new List<string>();
+            foreach (Employee e in thisShiftEmployees)
+            {
+                thisShiftEmployeeNames.Add(e.FirstName);
+            }
+            ViewData["Employee"] = thisShiftEmployeeNames;
 
             //ViewingParties
             List<string> viewingPartyNames = _context.ViewingParties.Select(c => c.ContentTitle).ToList();
-            ViewData["ViewingParty"] = viewingPartyNames;
+            List<ViewingParty> todayViewingParties = _context.ViewingParties.Where(v => v.DayAndTime.Date == today).ToList();
+            List<string> todayViewingPartyNames = new List<string>();
+            foreach(ViewingParty v in todayViewingParties)
+            {
+                todayViewingPartyNames.Add(v.ContentTitle);
+            }
+            ViewData["ViewingParty"] = todayViewingPartyNames;
 
             //Outings
             List<string> outingNames = _context.Outings.Select(c => c.Name).ToList();
-            ViewData["Outing"] = outingNames;
+            List<Outing> todayOutings = _context.Outings.Where(o => o.DayAndTime.Date == today).ToList();
+            List<string> todayOutingNames = new List<string>();
+            foreach(Outing o in todayOutings)
+            {
+                todayOutingNames.Add(o.Name);
+            }
+            ViewData["Outing"] = todayOutingNames;
 
 
             return View();

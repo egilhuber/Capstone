@@ -62,11 +62,33 @@ namespace healthicly.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Title,Message,Date,EmployeeId")] Alert alert)
         {
+            var thisUserName = User.Identity.Name;
+            var thisEmployee = _context.Employees.FirstOrDefault(e => e.Email == thisUserName);
+            List<Employee> poolEmployees = _context.Employees.Where(e => e.ShiftId == 4).ToList();
+
+            var thisShift = thisEmployee.ShiftId;
+            List<Employee> sendToTheseEmployees = _context.Employees.Where(e => e.ShiftId == thisShift).ToList();
+            foreach (Employee e in poolEmployees)
+            {
+                sendToTheseEmployees.Add(e);
+            }
+            List<string> phoneNumbers = new List<string>();
+            foreach(Employee e in sendToTheseEmployees)
+            {
+                phoneNumbers.Add(e.PhoneNumber);
+            }
+
+
             if (ModelState.IsValid)
             {
-                SendAlertText();
                 _context.Add(alert);
                 await _context.SaveChangesAsync();
+
+                foreach (string s in phoneNumbers)
+                {
+                    SendAlertText(s, alert.Title);
+                }
+
                 return RedirectToAction(nameof(Index));
             }
             ViewData["EmployeeId"] = new SelectList(_context.Employees, "Id", "Id", alert.EmployeeId);
@@ -162,7 +184,7 @@ namespace healthicly.Controllers
             return _context.Alerts.Any(e => e.Id == id);
         }
 
-        public void SendAlertText()
+        public void SendAlertText(string sendHere, string sendMessage)
         {
             const string accountSid = ApiKey.accountSid;
             const string authToken = ApiKey.authToken;
@@ -170,9 +192,9 @@ namespace healthicly.Controllers
             TwilioClient.Init(accountSid, authToken);
 
             var message = MessageResource.Create(
-                body: "An employee has created an alert for your shift!",
+                body: sendMessage,
                 from: new Twilio.Types.PhoneNumber("+12624193587"),
-                to: new Twilio.Types.PhoneNumber("+12623430620")
+                to: new Twilio.Types.PhoneNumber(sendHere)
             );
 
             Console.WriteLine(message.Sid);

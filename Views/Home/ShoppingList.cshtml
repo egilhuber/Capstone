@@ -7,7 +7,7 @@
     List<ShoppingListItem> shoppingListItems = (List<ShoppingListItem>)ViewData["ShoppingList"];
 }
 
-<h2>ShoppingList</h2>
+<h2>Shopping List</h2>
 
 <p>
     <a asp-area="" asp-controller="WishListItems" asp-action="Index">Submit a wishlist item</a>
@@ -28,7 +28,7 @@
 @foreach (var item in shoppingListItems) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Name)
+                @(item.Name)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

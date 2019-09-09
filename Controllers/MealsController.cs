@@ -66,7 +66,7 @@ namespace healthicly.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,BriefDescription,Category,Vegan,ContainsDairy,GlutenFree,ContainsSoy,ContainsPeanuts,IsApproved")] Meal meal)
+        public async Task<IActionResult> Create([Bind("Id,Name,BriefDescription,Category,CategoryId,Vegan,ContainsDairy,GlutenFree,ContainsSoy,ContainsPeanuts,IsApproved")] Meal meal)
         {
             if (ModelState.IsValid)
             {
@@ -88,12 +88,13 @@ namespace healthicly.Controllers
                 return NotFound();
             }
 
-            var meal = await _context.Meals.FindAsync(id);
-            meal.Category = await _context.Categories.Where(c => c.Id == meal.Category.Id).SingleOrDefaultAsync();
+            var meal = await _context.Meals.Include(m => m.Category).FirstOrDefaultAsync(m => m.Id == id);
+            meal.Category = await _context.Categories.Where(c => c.Id == meal.CategoryId).SingleOrDefaultAsync();
             if (meal == null)
             {
                 return NotFound();
             }
+            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name", meal.CategoryId);
             return View(meal);
         }
 
@@ -103,7 +104,7 @@ namespace healthicly.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,BriefDescription,Vegan,ContainsDairy,GlutenFree,ContainsSoy,ContainsPeanuts,IsApproved")] Meal meal)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,BriefDescription,Category,CategoryId,Vegan,ContainsDairy,GlutenFree,ContainsSoy,ContainsPeanuts,IsApproved")] Meal meal)
         {
             if (id != meal.Id)
             {
@@ -114,7 +115,7 @@ namespace healthicly.Controllers
             {
                 try
                 {
-                    
+                    meal.Category = await _context.Categories.Where(c => c.Id == meal.CategoryId).SingleOrDefaultAsync();
                     _context.Update(meal);
                     await _context.SaveChangesAsync();
                 }
@@ -131,6 +132,7 @@ namespace healthicly.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name", meal.CategoryId);
             return View(meal);
         }
 

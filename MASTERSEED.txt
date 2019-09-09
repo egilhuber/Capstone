@@ -1,7 +1,10 @@
 INSERT INTO Clients
-VALUES ('Tony', 'S', 'tonystark@test.com', 'false'),
-       ('Steve', 'R', 'steverogers@test.com', 'false'),
-       ('Peter', 'P', 'notspiderman@test.com', 'false')
+VALUES ('Harry', 'P', 'goldenboy@test.com', 'false'),
+       ('Hermione', 'G', 'hgranger@test.com', 'false'),
+       ('Ron', 'W', 'ronweasley@test.com', 'false'),
+	   ('Draco', 'M', 'dracomalfoy@test.com', 'false'),
+	   ('Ginny', 'W', 'ginnyweasley@test.com', 'false'),
+	   ('Sirius', 'B', 'siriusblack@test.com', 'false')
 
 INSERT INTO Shifts
 VALUES ('1'),

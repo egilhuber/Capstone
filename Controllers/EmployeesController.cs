@@ -131,8 +131,8 @@ namespace healthicly.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ClientId"] = new SelectList(_context.Clients, "Id", "Id", employee.ClientId);
-            ViewData["ShiftId"] = new SelectList(_context.Shifts, "Id", "Id", employee.ShiftId);
+            ViewData["ClientId"] = new SelectList(_context.Clients, "Id", "PrefFirstName", employee.ClientId);
+            ViewData["ShiftId"] = new SelectList(_context.Shifts, "Id", "Name", employee.ShiftId);
             return View(employee);
         }
 

@@ -131,6 +131,14 @@ namespace healthicly.Controllers
             
         }
 
+        public IActionResult ShoppingList()
+        {
+            List<WishListItem> approvedWishListItems = _context.WishListItems.Where(w => w.IsApproved == true).ToList();
+
+            ViewData["ShoppingList"] = approvedWishListItems;
+            return View();
+        }
+
         public IActionResult SplashPage()
         {
             return View();

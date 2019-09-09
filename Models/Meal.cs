@@ -1,4 +1,5 @@
-﻿using System;
+﻿using healthicly.Classes;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace healthicly.Models
 {
-    public class Meal
+    public class Meal : ShoppingListItem
     {
         [Key]
         public int Id { get; set; }

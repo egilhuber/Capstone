@@ -1,4 +1,5 @@
-﻿using System;
+﻿using healthicly.Classes;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace healthicly.Models
 {
-    public class WishListItem 
+    public class WishListItem : ShoppingListItem
     {
         [Key] 
         public int Id { get; set; }
@@ -18,5 +19,7 @@ namespace healthicly.Models
         [ForeignKey("EmployeeId")]
         public int EmployeeId { get; set; }
         public Employee UserEmail { get; set; }
+        [Display(Name = "Is Approved")]
+        public bool IsApproved { get; set; }
     }
 }

@@ -7,7 +7,7 @@
 
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrapCyborg.css" />
-        <link rel="stylesheet" href="~/css/site.css" />
+        <link rel="stylesheet" href="~/css/dash.css" />
     </environment>
     <environment exclude="Development">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
@@ -32,6 +32,7 @@
                 <ul class="nav navbar-nav">
                     <li><a asp-area="" asp-controller="Employees" asp-action="Details">Profile</a></li>
                     <li><a asp-area="" asp-controller="Meals" asp-action="Index">Submit A Meal</a></li>
+                    <li><a asp-area="" asp-controller="Meals" asp-action="ApprovedMeals">Approved Meals</a></li>
                     <li><a asp-area="" asp-controller="WishListItems" asp-action="Index">Wish List</a></li>
                     <li><a asp-area="" asp-controller="Alerts" asp-action="Create">Create An Alert</a></li>
                 </ul>

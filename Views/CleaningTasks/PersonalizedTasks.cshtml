@@ -3,6 +3,8 @@
 @{
     ViewData["Title"] = "PersonalizedTasks";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    List<CleaningTask> cleaningTasks = (List<CleaningTask>)ViewData["CleaningTask"];
+    
 }
 
 <h2>PersonalizedTasks</h2>
@@ -22,12 +24,14 @@
             <th>
                 @Html.DisplayNameFor(model => model.AssignedEmployee)
             </th>
-            <th></th>
+            <th>
+                @Html.DisplayNameFor(model => model.TaskComplete)
+            </th>
         </tr>
     </thead>
     <tbody>
         
-@foreach (var item in Model) {
+@foreach (var item in cleaningTasks) {
 
         <tr>
             <td>
@@ -38,6 +42,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.AssignedEmployee.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TaskComplete)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using healthicly.Data;
 using healthicly.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace healthicly.Controllers
 {
@@ -102,6 +103,7 @@ namespace healthicly.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int id, [Bind("Id,FirstName,LastName,Email,Position,ShiftId,ClientId,PhoneNumber")] Employee employee)
         {
             if (id != employee.Id)
@@ -157,6 +159,7 @@ namespace healthicly.Controllers
         // POST: Employees/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var employee = await _context.Employees.FindAsync(id);

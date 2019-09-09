@@ -18,6 +18,8 @@ namespace healthicly.Models
         public DateTime DayAndTime { get; set; }
 
         public string Location { get; set; }
+        [Display(Name = "Is Approved")]
+        public bool IsApproved { get; set; }
 
         //public bool Group { get; set; }
         //[Display(Name = "Client")]

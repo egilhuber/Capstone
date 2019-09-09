@@ -9,6 +9,7 @@ using healthicly.Data;
 using healthicly.Models;
 using healthicly.ViewModels;
 using healthicly.ApiKeys;
+using Microsoft.AspNetCore.Authorization;
 
 namespace healthicly.Controllers
 {
@@ -101,7 +102,7 @@ namespace healthicly.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,DayAndTime,Location,Group,Client")] Outing outing)
+        public async Task<IActionResult> Create([Bind("Id,Name,DayAndTime,Location,Group,Client,IsApproved")] Outing outing)
         {
             if (ModelState.IsValid)
             {
@@ -135,7 +136,8 @@ namespace healthicly.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,DayAndTime,Location,Group")] Outing outing)
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,DayAndTime,Location,Group,IsApproved")] Outing outing)
         {
             if (id != outing.Id)
             {
@@ -186,6 +188,7 @@ namespace healthicly.Controllers
         // POST: Outings/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var outing = await _context.Outings.FindAsync(id);

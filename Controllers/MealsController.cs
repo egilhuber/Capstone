@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using healthicly.Data;
 using healthicly.Models;
 using healthicly.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace healthicly.Controllers
 {
@@ -24,6 +25,14 @@ namespace healthicly.Controllers
         public async Task<IActionResult> Index()
         {
             return View(await _context.Meals.Include(s => s.Category).ToListAsync());
+        }
+
+        public IActionResult ApprovedMeals()
+        {
+            DateTime today = DateTime.Today;
+            List<Meal> approvedMeals = _context.Meals.Where(m => m.IsApproved == true).ToList();
+            ViewData["ApprovedMeal"] = approvedMeals;
+            return View();
         }
 
         // GET: Meals/Details/5
@@ -57,12 +66,13 @@ namespace healthicly.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,BriefDescription,Category,Vegan,ContainsDairy,GlutenFree,ContainsSoy,ContainsPeanuts")] Meal meal)
+        public async Task<IActionResult> Create([Bind("Id,Name,BriefDescription,Category,Vegan,ContainsDairy,GlutenFree,ContainsSoy,ContainsPeanuts,IsApproved")] Meal meal)
         {
             if (ModelState.IsValid)
             {
                 int category = meal.Category.Id;
                 meal.Category = _context.Categories.Where(c => c.Id == category).Single();
+                meal.CategoryId = meal.Category.Id;
                 _context.Add(meal);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -79,6 +89,7 @@ namespace healthicly.Controllers
             }
 
             var meal = await _context.Meals.FindAsync(id);
+            meal.Category = await _context.Categories.Where(c => c.Id == meal.Category.Id).SingleOrDefaultAsync();
             if (meal == null)
             {
                 return NotFound();
@@ -91,7 +102,8 @@ namespace healthicly.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,BriefDescription,Vegan,ContainsDairy,GlutenFree,ContainsSoy,ContainsPeanuts")] Meal meal)
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,BriefDescription,Vegan,ContainsDairy,GlutenFree,ContainsSoy,ContainsPeanuts,IsApproved")] Meal meal)
         {
             if (id != meal.Id)
             {
@@ -102,6 +114,7 @@ namespace healthicly.Controllers
             {
                 try
                 {
+                    
                     _context.Update(meal);
                     await _context.SaveChangesAsync();
                 }
@@ -142,6 +155,7 @@ namespace healthicly.Controllers
         // POST: Meals/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var meal = await _context.Meals.FindAsync(id);

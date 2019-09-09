@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using healthicly.Data;
 using healthicly.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace healthicly.Controllers
 {
@@ -54,7 +55,7 @@ namespace healthicly.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,DayAndTime,BriefDescription")] InHouseActivity inHouseActivity)
+        public async Task<IActionResult> Create([Bind("Id,Name,DayAndTime,BriefDescription,IsApproved")] InHouseActivity inHouseActivity)
         {
             if (ModelState.IsValid)
             {
@@ -86,7 +87,8 @@ namespace healthicly.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,DayAndTime,BriefDescription")] InHouseActivity inHouseActivity)
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,DayAndTime,BriefDescription,IsApproved")] InHouseActivity inHouseActivity)
         {
             if (id != inHouseActivity.Id)
             {
@@ -137,6 +139,7 @@ namespace healthicly.Controllers
         // POST: InHouseActivities/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var inHouseActivity = await _context.InHouseActivities.FindAsync(id);

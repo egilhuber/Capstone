@@ -57,7 +57,10 @@ namespace healthicly.Controllers
             List<string> todayActivitiesNames = new List<string>();
             foreach (InHouseActivity a in todayActivities)
             {
-                todayActivitiesNames.Add(a.Name);
+                if(a.IsApproved == true)
+                {
+                    todayActivitiesNames.Add(a.Name);
+                }
             }
             ViewData["InHouseActivity"] = todayActivitiesNames;
 
@@ -67,7 +70,10 @@ namespace healthicly.Controllers
             List<string> myTasksNames = new List<string>();
             foreach (CleaningTask c in myTasks)
             {
-                myTasksNames.Add(c.Name);
+                if(c.TaskComplete == false)
+                {
+                    myTasksNames.Add(c.Name);
+                }
             }
             ViewData["CleaningTask"] = myTasksNames;
 
@@ -77,7 +83,10 @@ namespace healthicly.Controllers
             List<string> myClientsNames = new List<string>();
             foreach(Client c in myClients)
             {
-                myClientsNames.Add(c.PrefFirstName);
+                if(c.CaresComplete == false)
+                {
+                    myClientsNames.Add(c.PrefFirstName);
+                }
             }
             ViewData["Client"] = myClientsNames;
 
@@ -97,7 +106,10 @@ namespace healthicly.Controllers
             List<string> todayViewingPartyNames = new List<string>();
             foreach(ViewingParty v in todayViewingParties)
             {
-                todayViewingPartyNames.Add(v.ContentTitle);
+                if(v.IsApproved == true)
+                {
+                    todayViewingPartyNames.Add(v.ContentTitle);
+                }
             }
             ViewData["ViewingParty"] = todayViewingPartyNames;
 
@@ -107,7 +119,10 @@ namespace healthicly.Controllers
             List<string> todayOutingNames = new List<string>();
             foreach(Outing o in todayOutings)
             {
-                todayOutingNames.Add(o.Name);
+                if(o.IsApproved == true)
+                {
+                    todayOutingNames.Add(o.Name);
+                }
             }
             ViewData["Outing"] = todayOutingNames;
 

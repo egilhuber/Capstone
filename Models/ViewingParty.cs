@@ -15,5 +15,7 @@ namespace healthicly.Models
         public string ContentTitle { get; set; }
 
         public DateTime DayAndTime { get; set; }
+        [Display(Name = "Is Approved")]
+        public bool IsApproved { get; set; }
     }
 }

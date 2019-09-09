@@ -28,5 +28,7 @@ namespace healthicly.Models
         public bool ContainsSoy { get; set; }
         [Display(Name = "Contains Peanuts")]
         public bool ContainsPeanuts { get; set; }
+        [Display(Name = "Is Approved")]
+        public bool IsApproved { get; set; }
     }
 }

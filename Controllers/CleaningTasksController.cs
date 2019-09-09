@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using healthicly.Data;
 using healthicly.Models;
 using healthicly.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace healthicly.Controllers
 {
@@ -28,6 +29,19 @@ namespace healthicly.Controllers
 
         public IActionResult PersonalizedTasks()
         {
+            var thisUserName = User.Identity.Name;
+            var thisEmployee = _context.Employees.FirstOrDefault(e => e.Email == thisUserName);
+            List<string> cleaningTaskNames = _context.CleaningTasks.Select(c => c.Name).ToList();
+            List<CleaningTask> myTasks = _context.CleaningTasks.Where(c => c.EmployeeId == thisEmployee.Id).ToList();
+            List<string> myTasksNames = new List<string>();
+            foreach (CleaningTask c in myTasks)
+            {
+                if (c.TaskComplete == false)
+                {
+                    myTasksNames.Add(c.Name);
+                }
+            }
+            ViewData["CleaningTask"] = myTasks;
             return View();
         }
 
@@ -61,7 +75,8 @@ namespace healthicly.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,BriefDescription,AssignedEmployee")] CleaningTask cleaningTask)
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Create([Bind("Id,Name,BriefDescription,AssignedEmployee,TaskComplete")] CleaningTask cleaningTask)
         {
             if (ModelState.IsValid)
             {
@@ -83,6 +98,7 @@ namespace healthicly.Controllers
             }
 
             var cleaningTask = await _context.CleaningTasks.FindAsync(id);
+            cleaningTask.AssignedEmployee = await _context.Employees.Where(e => e.Id == cleaningTask.EmployeeId).SingleOrDefaultAsync();
             if (cleaningTask == null)
             {
                 return NotFound();
@@ -95,8 +111,11 @@ namespace healthicly.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,BriefDescription,AssignedEmployee")] CleaningTask cleaningTask)
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,BriefDescription,AssignedEmployee,TaskComplete")] CleaningTask cleaningTask)
         {
+            var thisUserName = User.Identity.Name;
+            var thisEmployee = _context.Employees.FirstOrDefault(e => e.Email == thisUserName);
             if (id != cleaningTask.Id)
             {
                 return NotFound();
@@ -106,6 +125,8 @@ namespace healthicly.Controllers
             {
                 try
                 {
+                    cleaningTask.AssignedEmployee = await _context.Employees.Where(e => e.Id == thisEmployee.Id).SingleOrDefaultAsync();
+                    cleaningTask.EmployeeId = thisEmployee.Id;
                     _context.Update(cleaningTask);
                     await _context.SaveChangesAsync();
                 }
@@ -146,6 +167,7 @@ namespace healthicly.Controllers
         // POST: CleaningTasks/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var cleaningTask = await _context.CleaningTasks.FindAsync(id);

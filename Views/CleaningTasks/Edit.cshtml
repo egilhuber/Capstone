@@ -25,6 +25,13 @@
                 <span asp-validation-for="BriefDescription" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input asp-for="TaskComplete"/> @Html.DisplayNameFor(model => model.TaskComplete)
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-default" />
             </div>
         </form>

@@ -16,6 +16,8 @@
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.9" />
+    <PackageReference Include="PDF.Core" Version="2019.6.5.41" />
+    <PackageReference Include="Syncfusion.HtmlToPdfConverter.QtWebKit.Net.Core" Version="17.2.0.46" />
     <PackageReference Include="Twilio" Version="5.32.0" />
   </ItemGroup>
 

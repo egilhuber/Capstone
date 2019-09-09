@@ -9,12 +9,21 @@ using healthicly.Data;
 using healthicly.Models;
 using healthicly.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using Syncfusion.HtmlConverter;
+using Syncfusion.Pdf;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using IronPdf.Forms;
+using Syncfusion.Pdf.Graphics;
+using System.Drawing;
 
 namespace healthicly.Controllers
 {
     public class MealsController : Controller
     {
         private readonly ApplicationDbContext _context;
+
 
         public MealsController(ApplicationDbContext context)
         {

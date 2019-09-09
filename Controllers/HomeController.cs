@@ -51,22 +51,33 @@ namespace healthicly.Controllers
             DateTime today = DateTime.Today;
             var thisUserName = User.Identity.Name;
             var thisEmployee = _context.Employees.FirstOrDefault(e => e.Email == thisUserName);
-
+            //InHouseActivities
             List<string> inHouseActivityNames = _context.InHouseActivities.Select(c => c.Name).ToList();
-            ViewData["InHouseActivity"] = inHouseActivityNames;
+            List<InHouseActivity> todayActivities = _context.InHouseActivities.Where(a => a.DayAndTime.Date == today).ToList();
+            List<string> todayActivitiesNames = new List<string>();
+            foreach (InHouseActivity a in todayActivities)
+            {
+                todayActivitiesNames.Add(a.Name);
+            }
+            ViewData["InHouseActivity"] = todayActivitiesNames;
 
+            //CleaningTasks
             List<string> cleaningTaskNames = _context.CleaningTasks.Select(c => c.Name).ToList();
             ViewData["CleaningTask"] = cleaningTaskNames;
 
+            //Clients
             List<string> clientNames = _context.Clients.Select(c => c.PrefFirstName).ToList();
             ViewData["Client"] = clientNames;
 
+            //Employees
             List<string> employeeNames = _context.Employees.Select(c => c.FirstName).ToList();
             ViewData["Employee"] = employeeNames;
 
+            //ViewingParties
             List<string> viewingPartyNames = _context.ViewingParties.Select(c => c.ContentTitle).ToList();
             ViewData["ViewingParty"] = viewingPartyNames;
 
+            //Outings
             List<string> outingNames = _context.Outings.Select(c => c.Name).ToList();
             ViewData["Outing"] = outingNames;
 

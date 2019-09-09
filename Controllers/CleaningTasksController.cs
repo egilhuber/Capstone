@@ -26,6 +26,11 @@ namespace healthicly.Controllers
             return View(await _context.CleaningTasks.Include(s => s.AssignedEmployee).ToListAsync());
         }
 
+        public IActionResult PersonalizedTasks()
+        {
+            return View();
+        }
+
         // GET: CleaningTasks/Details/5
         public async Task<IActionResult> Details(int? id)
         {

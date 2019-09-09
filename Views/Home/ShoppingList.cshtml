@@ -1,4 +1,4 @@
-﻿@model IEnumerable<healthicly.Models.Meal>
+﻿
 @using healthicly.Classes
 
 @{
@@ -10,16 +10,16 @@
 <h2>ShoppingList</h2>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-area="" asp-controller="WishListItems" asp-action="Index">Submit a wishlist item</a>
+    </p>
+<p>
+    <a asp-area="" asp-controller="ItemToBuys" asp-action="Index">Submit an item to buy</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsApproved)
+                Name
             </th>
             <th></th>
         </tr>
@@ -29,9 +29,6 @@
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsApproved)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

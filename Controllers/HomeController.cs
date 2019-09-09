@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using healthicly.Models;
 using healthicly.ViewModels;
 using healthicly.Data;
+using healthicly.Classes;
 
 namespace healthicly.Controllers
 {
@@ -134,8 +135,18 @@ namespace healthicly.Controllers
         public IActionResult ShoppingList()
         {
             List<WishListItem> approvedWishListItems = _context.WishListItems.Where(w => w.IsApproved == true).ToList();
+            List<ItemToBuy> approvedItemToBuys = _context.ItemToBuys.Where(i => i.IsApproved == true).ToList();
+            List<ShoppingListItem> approvedItems = new List<ShoppingListItem>();
+            foreach(WishListItem w in approvedWishListItems)
+            {
+                approvedItems.Add(w);
+            }
+            foreach(ItemToBuy i in approvedItemToBuys)
+            {
+                approvedItems.Add(i);
+            }
 
-            ViewData["ShoppingList"] = approvedWishListItems;
+            ViewData["ShoppingList"] = approvedItems;
             return View();
         }
 

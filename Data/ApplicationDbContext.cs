@@ -28,6 +28,7 @@ namespace healthicly.Data
         public DbSet<ViewingParty> ViewingParties { get; set; }
         public DbSet<WishListItem> WishListItems { get; set; }
         public DbSet<Alert> Alerts { get; set; }
+        public DbSet<ItemToBuy> ItemToBuys { get; set; }
 
     }
 }

@@ -17,7 +17,8 @@ namespace healthicly.Models
         public string LastInitial { get; set; }
 
         public string Email { get; set; }
-        
+
+        [Display(Name = "Cares Complete")]
         public bool CaresComplete { get; set; }
     }
 }

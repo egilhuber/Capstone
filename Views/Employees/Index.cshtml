@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h3>All Employees</h3>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -53,10 +53,10 @@
                 @Html.DisplayFor(modelItem => item.Position)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Shift.Id)
+                @Html.DisplayFor(modelItem => item.Shift.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.AssignedClient.Id)
+                @Html.DisplayFor(modelItem => item.AssignedClient.PrefFirstName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.PhoneNumber)

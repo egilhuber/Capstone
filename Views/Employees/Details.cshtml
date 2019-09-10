@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
+<h3>Details</h3>
 
 <div>
     <h4>Employee</h4>
@@ -45,13 +45,13 @@
             @Html.DisplayNameFor(model => model.Shift)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Shift.Id)
+            @Html.DisplayFor(model => model.Shift.Name)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.AssignedClient)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.AssignedClient.Id)
+            @Html.DisplayFor(model => model.AssignedClient.PrefFirstName)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.PhoneNumber)

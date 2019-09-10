@@ -6,8 +6,30 @@
     List<Comment> comments = (List<Comment>)ViewData["Comments"];
 }
 
-<h2>Details</h2>
+<h3>Details</h3>
+<hr />
+<div>
 
+    @{
+        string embeddedmapsURL;
+        string modelName;
+        modelName = Model.Location.Replace(" ", String.Empty);
+
+        embeddedmapsURL = @"https://www.google.com/maps/embed/v1/place?key=" + healthicly.ApiKeys.ApiKey.mapsKey + "&q=" + modelName;
+    }
+
+    <iframe width="600"
+            height="450"
+            frameborder="0" style="border:0"
+            src=@embeddedmapsURL allowfullscreen>
+    </iframe>
+
+
+    <hr style="width:75%; text-align:right" />
+
+
+    <br /><br />
+</div>
 <div>
     <h4>Outing</h4>
     <hr />
@@ -38,64 +60,43 @@
             @Html.DisplayFor(model => model.IsApproved)
         </dd>
         @*<dt>
-            @Html.DisplayNameFor(model => model.Group)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Group)
-        </dd>*@
+                @Html.DisplayNameFor(model => model.Group)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Group)
+            </dd>*@
     </dl>
 </div>
 
-<div>
 
-    @{
-        string embeddedmapsURL;
-        string modelName;
-        modelName = Model.Location.Replace(" ", String.Empty);
 
-        embeddedmapsURL = @"https://www.google.com/maps/embed/v1/place?key=" + healthicly.ApiKeys.ApiKey.mapsKey + "&q=" + modelName;
+<br />
+<h4>
+    <strong> Comments</strong><br />
+</h4>
+
+<div class="div-right">
+    @foreach (Comment c in comments)
+    {
+
+        string text = c.UserComment;
+        string user = c.Employee.FirstName + " " + c.Employee.LastName;
+        <h5>@(user)</h5>
+        <p>@(text)</p>
+        <br /><br />
     }
-
-    <iframe width="600"
-            height="450"
-            frameborder="0" style="border:0"
-            src=@embeddedmapsURL allowfullscreen>
-    </iframe>
-
-
-    <hr style="width:75%; text-align:right" />
-
-
-    <br /><br />
 </div>
-
- <br />
-                <h3>
-                    <strong> Comments</strong><br />
-                </h3>
-
-                <div class="div-right">
-                    @foreach (Comment c in comments)
-                    {
-                        
-                        string text = c.UserComment;
-                        string user = c.Employee.FirstName + " " + c.Employee.LastName;
-                        <h5>@(user)</h5>
-                        <p>@(text)</p>
-                        <br /><br />
-                    }
-                </div>
-                <div class="div-right">
-                    <strong>Leave a note for other employees below.</strong>
-                    <br />
-                    <!-- string type, int id, string commentData -->
-                    <form method="post" action="/Outings/AddComment">
-                        <input value="outing" name="type" hidden />
-                        <input value="@Model.Id" name="activityId" hidden />
-                        <input type="text" onfocus="this.value=''" value="Insert comment here" name="commentData" style="border:1px solid; width:60%; padding:8px; border-color:blue;"><br />
-                        <button type="submit" class="btn btn-primary">Post</button><br />
-                    </form>
-                </div>
+<div class="div-right">
+    <strong>Leave a note for other employees below.</strong>
+    <br />
+    <!-- string type, int id, string commentData -->
+    <form method="post" action="/Outings/AddComment">
+        <input value="outing" name="type" hidden />
+        <input value="@Model.Id" name="activityId" hidden />
+        <input type="text" onfocus="this.value=''" value="Insert comment here" name="commentData" style="border:1px solid; width:60%; padding:8px; border-color:blue;"><br />
+        <button type="submit" class="btn btn-primary">Post</button><br />
+    </form>
+</div>
 
 <div>
     <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |

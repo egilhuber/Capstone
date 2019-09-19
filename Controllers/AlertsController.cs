@@ -65,7 +65,7 @@ namespace healthicly.Controllers
             var thisUserName = User.Identity.Name;
             var thisEmployee = _context.Employees.FirstOrDefault(e => e.Email == thisUserName);
             List<Employee> poolEmployees = _context.Employees.Where(e => e.ShiftId == 4).ToList();
-
+            DateTime currentTime = DateTime.Now;
             var thisShift = thisEmployee.ShiftId;
             List<Employee> sendToTheseEmployees = _context.Employees.Where(e => e.ShiftId == thisShift).ToList();
             foreach (Employee e in poolEmployees)
@@ -81,6 +81,9 @@ namespace healthicly.Controllers
 
             if (ModelState.IsValid)
             {
+                alert.Employee = thisEmployee;
+                alert.EmployeeId = thisEmployee.Id;
+                alert.Date = currentTime;
                 _context.Add(alert);
                 await _context.SaveChangesAsync();
 

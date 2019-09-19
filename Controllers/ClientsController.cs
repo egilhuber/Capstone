@@ -25,6 +25,24 @@ namespace healthicly.Controllers
             return View(await _context.Clients.ToListAsync());
         }
 
+        public IActionResult PersonalizedClients()
+        {
+            var thisUserName = User.Identity.Name;
+            var thisEmployee = _context.Employees.Include(e => e.AssignedClient).FirstOrDefault(e => e.Email == thisUserName);
+            List<string> clientNames = _context.Clients.Select(c => c.PrefFirstName).ToList();
+            List<Client> myClients = _context.Clients.Where(c => c.Id == thisEmployee.AssignedClient.Id).ToList();
+            List<string> myClientsNames = new List<string>();
+            foreach (Client c in myClients)
+            {
+                if(c.CaresComplete == false)
+                {
+                    myClientsNames.Add(c.PrefFirstName);
+                }
+            }
+            ViewData["Clients"] = myClients;
+            return View();
+        }
+
         // GET: Clients/Details/5
         public async Task<IActionResult> Details(int? id)
         {

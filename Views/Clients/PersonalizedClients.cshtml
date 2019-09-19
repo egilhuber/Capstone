@@ -1,0 +1,47 @@
+﻿@model IEnumerable<healthicly.Models.Client>
+
+@{
+    ViewData["Title"] = "PersonalizedClients";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<Client> clients = (List<Client>)ViewData["Clients"];
+}
+
+<h3>My Clients</h3>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.PrefFirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastInitial)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CaresComplete)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in clients) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.PrefFirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastInitial)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CaresComplete)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
